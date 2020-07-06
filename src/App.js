@@ -32,7 +32,15 @@ function App() {
       setToCurrency(firstCurrency)
       setExchangerate(data.rates[firstCurrency])
     })
-  }, [])
+  }, [])//show currencies in select boxes
+
+  useEffect(() => {
+    if(fromCurrency != null && toCurrency != null){
+      fetch(`${BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}`)
+        .then(res => res.json())
+        .then(data => setExchangerate(data.rates[toCurrency]))
+    }
+  })//use when changing the currencies
 
   function handleFromAmountChange(e){
     setAmount(e.target.value)
